@@ -2,8 +2,9 @@
 
 namespace Thomas.Business.Models
 {
-    public class Chamado
+    public class Chamado : Entity
     {
+        public Guid FornecedorId { get; set; }
         public string Titulo { get; set; }
 
         public string Descricao { get; set; }
