@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -14,8 +15,7 @@ namespace Thomas.App.ViewModels
         [Key]
         public Guid Id { get; set; }
 
-        [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        [DisplayName("Fornecedor")]
+        [HiddenInput]
         public Guid FornecedorId { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
