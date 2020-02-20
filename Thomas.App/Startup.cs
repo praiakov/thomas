@@ -26,7 +26,8 @@ namespace Thomas.App
             services.AddControllersWithViews();
 
             services.AddDbContext<MeuDbContext>(options =>
-               options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+               options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+               .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
 
             services.AddScoped<MeuDbContext>();
             services.AddScoped<IChamadoRepository, ChamadoRepository>();
