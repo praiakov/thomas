@@ -24,7 +24,7 @@ namespace Thomas.App.Controllers
         }
 
         public async Task<IActionResult> Index()
-        {
+         {
             return View(_mapper.Map<IEnumerable<FornecedorViewModel>>(await _fornecedorRepository.ObterTodos()));
         }
 
