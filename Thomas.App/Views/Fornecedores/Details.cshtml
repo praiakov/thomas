@@ -1,14 +1,10 @@
 ﻿@model Thomas.App.ViewModels.FornecedorViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhe do Fornecedor - " + Model.Nome;
 }
 
-<h1>Details</h1>
-
 <div>
-    <h4>FornecedorViewModel</h4>
-    <hr />
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Nome)
@@ -31,6 +27,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-warning" action="Edit" asp-route-id="@Model.Id"><span class="fa fa-pencil-alt"></span></a>
+    <a class="btn btn-info" href="javascript:window.history.back();">Voltar</a>
 </div>
