@@ -1,13 +1,11 @@
 ﻿@model Thomas.App.ViewModels.ChamadoViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Novo Chamador";
 }
 
-<h1>Create</h1>
+<h3 style="margin-top: 50px">@ViewData["Title"]</h3>
 
-<h4>ChamadoViewModel</h4>
-<hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
@@ -26,8 +24,15 @@
                 <span asp-validation-for="Titulo" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="TipoStatus" class="control-label"></label><br />
+                <input type="radio" value="1" asp-for="TipoStatus" checked /> Aberto
+                <input type="radio" value="2" asp-for="TipoStatus" /> Fechado
+                <input type="radio" value="2" asp-for="TipoStatus" /> Pausado
+                <input type="radio" value="2" asp-for="TipoStatus" /> Cancelado
+            </div>
+            <div class="form-group">
                 <label asp-for="Descricao" class="control-label"></label>
-                <input asp-for="Descricao" class="form-control" />
+                <textarea cols="40" rows="5" asp-for="Descricao" class="form-control"></textarea>
                 <span asp-validation-for="Descricao" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -41,19 +46,11 @@
                 <span asp-validation-for="DataFechamento" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TipoStatus" class="control-label"></label>
-                <input asp-for="TipoStatus" class="form-control" />
-                <span asp-validation-for="TipoStatus" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Cadastrar" class="btn btn-primary" />
+                <a class="btn btn-info" asp-action="Index">Voltar</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
