@@ -28,7 +28,7 @@ namespace Thomas.App.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(_mapper.Map<IEnumerable<ChamadoViewModel>>(await _chamadoRepository.ObterTodos()));
+            return View(_mapper.Map<IEnumerable<ChamadoViewModel>>(await _chamadoRepository.ObterChamadosFornecedores()));
         }
 
         public async Task<IActionResult> Details(Guid id)
