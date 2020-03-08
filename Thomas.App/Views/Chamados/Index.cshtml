@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Thomas.App.ViewModels.ChamadoViewModel>
+﻿@using Thomas.App.Extensions;
+@model IEnumerable<Thomas.App.ViewModels.ChamadoViewModel>
 
 @{
     ViewData["Title"] = "Lista de Chamados";
@@ -51,7 +52,7 @@
                     @Html.DisplayFor(modelItem => item.DataFechamento)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TipoStatus)
+                    @this.FormataStatus(item.TipoStatus)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Fornecedor.Nome)
