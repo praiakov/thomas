@@ -60,7 +60,7 @@ namespace Thomas.App.Controllers
 
         public async Task<IActionResult> Edit(Guid id)
         {
-            var chamadoViewModel = _mapper.Map<ChamadoViewModel>(await _chamadoRepository.ObterPorId(id));
+            var chamadoViewModel = await ObterChamado(id);
 
             if (chamadoViewModel == null)
             {
@@ -108,6 +108,16 @@ namespace Thomas.App.Controllers
             await _chamadoRepository.Remover(id);
 
             return RedirectToAction("Index");
+        }
+
+        private async Task<ChamadoViewModel> ObterChamado(Guid id)
+        {
+            var chamado = _mapper.Map<ChamadoViewModel>(await _chamadoRepository.ObterChamadoFornecedor(id));
+
+            chamado.Fornecedores = _mapper.Map<IEnumerable<FornecedorViewModel>>(await _fornecedorRepository.ObterTodos());
+
+            return chamado;
+
         }
 
         private async Task<ChamadoViewModel> PopularFornecedores(ChamadoViewModel chamado)
