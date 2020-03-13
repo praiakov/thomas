@@ -1,7 +1,7 @@
 ﻿@model Thomas.App.ViewModels.ChamadoViewModel
 
 @{
-    ViewData["Title"] = "Novo Chamador";
+    ViewData["Title"] = "Novo Chamado";
 }
 
 <h3 style="margin-top: 50px">@ViewData["Title"]</h3>
@@ -37,12 +37,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="DataAbertura" class="control-label"></label>
-                <input asp-for="DataAbertura" class="form-control" />
+                <input asp-for="DataAbertura" class="form-control datepicker"/>
                 <span asp-validation-for="DataAbertura" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DataFechamento" class="control-label"></label>
-                <input asp-for="DataFechamento" class="form-control" />
+                <input asp-for="DataFechamento" class="form-control datepicker"/>
                 <span asp-validation-for="DataFechamento" class="text-danger"></span>
             </div>
             <div class="form-group">

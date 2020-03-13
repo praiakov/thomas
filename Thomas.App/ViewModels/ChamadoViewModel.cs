@@ -23,11 +23,11 @@ namespace Thomas.App.ViewModels
         [StringLength(500, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
         public string Descricao { get; set; }
 
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
-        public DateTime DataAbertura { get; set; }
+        [DisplayName("Data de Abertura")]
+        public string DataAbertura { get; set; }
 
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
-        public DateTime DataFechamento { get; set; }
+        [DisplayName("Data de Fechamento")]
+        public string DataFechamento { get; set; }
 
         [DisplayName("Status")]
         public int TipoStatus { get; set; }
