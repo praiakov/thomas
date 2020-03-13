@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Collections.Generic;
+using System.Globalization;
 using Thomas.Business.Interfaces;
 using Thomas.Data.Context;
 using Thomas.Data.Repository;
@@ -36,6 +39,14 @@ namespace Thomas.App
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            var defaultCulture = new CultureInfo("pt-br");
+            var localizationOptions = new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture(defaultCulture),
+                SupportedCultures = new List<CultureInfo> { defaultCulture },
+                SupportedUICultures = new List<CultureInfo> { defaultCulture }
+            };
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -51,6 +62,8 @@ namespace Thomas.App
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseRequestLocalization(localizationOptions);
 
             app.UseEndpoints(endpoints =>
             {
