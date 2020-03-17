@@ -18,6 +18,12 @@
             @Html.DisplayFor(model => model.Titulo)
         </dd>
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NumeroChamado)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NumeroChamado)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Descricao)
         </dt>
         <dd class="col-sm-10">
@@ -45,7 +51,7 @@
             @Html.DisplayNameFor(model => model.Fornecedor)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Fornecedor.Contato)
+            @Html.DisplayFor(model => model.Fornecedor.Nome)
         </dd>
     </dl>
 </div>
