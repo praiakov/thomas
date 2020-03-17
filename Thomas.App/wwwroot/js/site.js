@@ -8,3 +8,10 @@
         orientation: "bottom auto"
     });
 });
+
+$(document).ready(function () {
+    $('.form-check-input').bootstrapToggle({
+        on: 'Sim',
+        off: 'Não'
+    });
+});
