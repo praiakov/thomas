@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Collections.Generic;
 using System.Globalization;
+using Thomas.App.Areas.Identity.Data;
 using Thomas.Business.Interfaces;
 using Thomas.Data.Context;
 using Thomas.Data.Repository;
@@ -25,6 +27,14 @@ namespace Thomas.App
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddDefaultUI()
+                .AddEntityFrameworkStores<AspNetCoreIdentityContext>();
+
+            services.AddDbContext<AspNetCoreIdentityContext>(options =>
+                    options.UseSqlServer(
+                        Configuration.GetConnectionString("AspNetCoreIdentityContextConnection")));
+
             services.AddAutoMapper(typeof(Startup));
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
@@ -57,6 +67,7 @@ namespace Thomas.App
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -65,11 +76,14 @@ namespace Thomas.App
 
             app.UseRequestLocalization(localizationOptions);
 
+            app.UseAuthentication();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }
