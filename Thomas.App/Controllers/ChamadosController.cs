@@ -9,18 +9,22 @@ using Thomas.Business.Models;
 
 namespace Thomas.App.Controllers
 {
-    public class ChamadosController : Controller
+    public class ChamadosController : BaseController
     {
 
         private readonly IChamadoRepository _chamadoRepository;
         private readonly IFornecedorRepository _fornecedorRepository;
         private readonly IMapper _mapper;
+        private readonly IChamadoService _chamadoService;
 
         public ChamadosController(IChamadoRepository chamadoRepository,
             IFornecedorRepository fornecedorRepository,
-            IMapper mapper
-            )
+            IMapper mapper,
+            INotificador notificador,
+            IChamadoService chamadoService
+            ) : base(notificador)
         {
+            _chamadoService = chamadoService;
             _chamadoRepository = chamadoRepository;
             _fornecedorRepository = fornecedorRepository;
             _mapper = mapper;
@@ -52,8 +56,9 @@ namespace Thomas.App.Controllers
         {
             if (!ModelState.IsValid) return View(chamadoViewModel);
 
-            var fornecedor = _mapper.Map<Chamado>(chamadoViewModel);
-            await _chamadoRepository.Adicionar(fornecedor);
+            await _chamadoService.Adicionar(_mapper.Map<Chamado>(chamadoViewModel));
+
+            if (!OperacaoValida()) return View(chamadoViewModel);
 
             return RedirectToAction("Index");
         }
@@ -78,8 +83,9 @@ namespace Thomas.App.Controllers
 
             if (!ModelState.IsValid) return View(chamadoViewModel);
 
-            var chamado = _mapper.Map<Chamado>(chamadoViewModel);
-            await _chamadoRepository.Atualizar(chamado);
+            await _chamadoService.Atualizar(_mapper.Map<Chamado>(chamadoViewModel));
+
+            if (!OperacaoValida()) return View(chamadoViewModel);
 
             return RedirectToAction("Index");
         }

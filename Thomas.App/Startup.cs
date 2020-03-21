@@ -11,6 +11,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using Thomas.App.Areas.Identity.Data;
 using Thomas.Business.Interfaces;
+using Thomas.Business.Interfaces.Services;
+using Thomas.Business.Notifications;
+using Thomas.Business.Services;
 using Thomas.Data.Context;
 using Thomas.Data.Repository;
 
@@ -45,6 +48,9 @@ namespace Thomas.App
             services.AddScoped<MeuDbContext>();
             services.AddScoped<IChamadoRepository, ChamadoRepository>();
             services.AddScoped<IFornecedorRepository, FornecedorRepository>();
+            services.AddScoped<IFornecedorService, FornecedorService>();
+            services.AddScoped<IChamadoService, ChamadoService>();
+            services.AddScoped<INotificador, Notificador>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

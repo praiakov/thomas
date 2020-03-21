@@ -6,19 +6,24 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Thomas.App.ViewModels;
 using Thomas.Business.Interfaces;
+using Thomas.Business.Interfaces.Services;
 using Thomas.Business.Models;
 
 namespace Thomas.App.Controllers
 {
-    public class FornecedoresController : Controller
+    public class FornecedoresController : BaseController
     {
         private readonly IFornecedorRepository _fornecedorRepository;
         private readonly IMapper _mapper;
+        private readonly IFornecedorService _fornecedorService;
 
         public FornecedoresController(IFornecedorRepository fornecedorRepository,
-            IMapper mapper
-            )
+            IMapper mapper,
+            IFornecedorService fornecedorService,
+            INotificador notificador
+            ) :base(notificador)
         {
+            _fornecedorService = fornecedorService;
             _fornecedorRepository = fornecedorRepository;
             _mapper = mapper;
         }
@@ -52,8 +57,9 @@ namespace Thomas.App.Controllers
 
             if (!ModelState.IsValid) return View(fornecedorViewModel);
 
-            var fornecedor = _mapper.Map<Fornecedor>(fornecedorViewModel);
-            await _fornecedorRepository.Adicionar(fornecedor);
+            await _fornecedorService.Adicionar(_mapper.Map<Fornecedor>(fornecedorViewModel));
+
+            if (!OperacaoValida()) return View(fornecedorViewModel);
 
             return RedirectToAction("Index");
         }
@@ -78,8 +84,9 @@ namespace Thomas.App.Controllers
 
             if (!ModelState.IsValid) return View(fornecedorViewModel);
 
-            var fornecedor = _mapper.Map<Fornecedor>(fornecedorViewModel);
-            await _fornecedorRepository.Atualizar(fornecedor);
+            await _fornecedorService.Atualizar(_mapper.Map<Fornecedor>(fornecedorViewModel));
+
+            if (!OperacaoValida()) return View(fornecedorViewModel);
 
             return RedirectToAction("Index");
         }
