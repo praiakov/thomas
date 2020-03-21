@@ -15,6 +15,10 @@ namespace Thomas.Data.Mappings
                 .IsRequired()
                 .HasColumnType("varchar(100)");
 
+            builder.Property(p => p.Documento)
+               .IsRequired()
+               .HasColumnType("varchar(14)");
+
             builder.Property(f => f.Contato)
                 .IsRequired()
                 .HasColumnType("varchar(100)");
