@@ -23,6 +23,7 @@ namespace Thomas.App.Controllers
             return View();
         }
 
+        [Route("erro/{id:length(3,3)}")]
         public IActionResult Errors(int id)
         {
             var modelErro = new ErrorViewModel();

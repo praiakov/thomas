@@ -36,10 +36,11 @@ namespace Thomas.App
 
             services.AddDbContext<AspNetCoreIdentityContext>(options =>
                     options.UseSqlServer(
-                        Configuration.GetConnectionString("AspNetCoreIdentityContextConnection")));
+                        Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddAutoMapper(typeof(Startup));
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            services.AddRazorPages();
 
             services.AddDbContext<MeuDbContext>(options =>
                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
@@ -69,7 +70,8 @@ namespace Thomas.App
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/erro/500");
+                app.UseStatusCodePagesWithRedirects("/erro/{0}");
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
