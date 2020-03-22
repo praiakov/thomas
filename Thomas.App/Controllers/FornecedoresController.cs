@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Thomas.App.ViewModels;
 using Thomas.Business.Interfaces;
@@ -11,6 +12,7 @@ using Thomas.Business.Models;
 
 namespace Thomas.App.Controllers
 {
+    [Authorize]
     public class FornecedoresController : BaseController
     {
         private readonly IFornecedorRepository _fornecedorRepository;
@@ -28,11 +30,14 @@ namespace Thomas.App.Controllers
             _mapper = mapper;
         }
 
+        [Route("lista-de-fornecedores")]
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
          {
             return View(_mapper.Map<IEnumerable<FornecedorViewModel>>(await _fornecedorRepository.ObterTodos()));
         }
 
+        [Route("dados-do-fornecedor")]
         public async Task<IActionResult> Details(Guid id)
         {
             var fornecedorViewModel = _mapper.Map<FornecedorViewModel>(await _fornecedorRepository.ObterPorId(id));
@@ -45,11 +50,13 @@ namespace Thomas.App.Controllers
             return View(fornecedorViewModel);
         }
 
+        [Route("novo-fornecedor")]
         public IActionResult Create()
         {
             return View();
         }
 
+        [Route("novo-fornecedor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(FornecedorViewModel fornecedorViewModel)
@@ -64,6 +71,7 @@ namespace Thomas.App.Controllers
             return RedirectToAction("Index");
         }
 
+        [Route("editar-fornecedor/{id:guid}")]
         public async Task<IActionResult> Edit(Guid id)
         {
             var fornecedorViewModel = _mapper.Map<FornecedorViewModel>(await _fornecedorRepository.ObterPorId(id));
@@ -76,6 +84,7 @@ namespace Thomas.App.Controllers
             return View(fornecedorViewModel);
         }
 
+        [Route("editar-fornecedor/{id:guid}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, FornecedorViewModel fornecedorViewModel)
@@ -91,6 +100,7 @@ namespace Thomas.App.Controllers
             return RedirectToAction("Index");
         }
 
+        [Route("excluir-fornecedor/{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var fornecedorViewModel = _mapper.Map<FornecedorViewModel>(await _fornecedorRepository.ObterPorId(id));
@@ -103,6 +113,7 @@ namespace Thomas.App.Controllers
             return View(fornecedorViewModel);
         }
 
+        [Route("excluir-fornecedor/{id:guid}")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)

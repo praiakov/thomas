@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Thomas.App.ViewModels;
 using Thomas.Business.Interfaces;
@@ -9,6 +10,7 @@ using Thomas.Business.Models;
 
 namespace Thomas.App.Controllers
 {
+    [Authorize]
     public class ChamadosController : BaseController
     {
 
@@ -30,11 +32,14 @@ namespace Thomas.App.Controllers
             _mapper = mapper;
         }
 
+        [AllowAnonymous]
+        [Route("lista-de-chamados")]
         public async Task<IActionResult> Index()
         {
             return View(_mapper.Map<IEnumerable<ChamadoViewModel>>(await _chamadoRepository.ObterChamadosFornecedores()));
         }
 
+        [Route("dados-do-chamado/{id:guid}")]
         public async Task<IActionResult> Details(Guid id)
         {
             var chamadoViewModel = _mapper.Map<ChamadoViewModel>(await _chamadoRepository.ObterPorId(id));
@@ -42,6 +47,7 @@ namespace Thomas.App.Controllers
             return View(chamadoViewModel);
         }
 
+        [Route("novo-chamado")]
         public async Task<IActionResult> Create()
         {
 
@@ -50,6 +56,7 @@ namespace Thomas.App.Controllers
             return View(chamadoViewModel);
         }
 
+        [Route("novo-chamado")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ChamadoViewModel chamadoViewModel)
@@ -63,6 +70,7 @@ namespace Thomas.App.Controllers
             return RedirectToAction("Index");
         }
 
+        [Route("editar-chamado/{id:guid}")]
         public async Task<IActionResult> Edit(Guid id)
         {
             var chamadoViewModel = await ObterChamado(id);
@@ -75,6 +83,7 @@ namespace Thomas.App.Controllers
             return View(chamadoViewModel);
         }
 
+        [Route("editar-chamado/{id:guid}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id,  ChamadoViewModel chamadoViewModel)
@@ -90,6 +99,7 @@ namespace Thomas.App.Controllers
             return RedirectToAction("Index");
         }
 
+        [Route("excluir-chamado/{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var chamadoViewModel = _mapper.Map<ChamadoViewModel>(await _chamadoRepository.ObterPorId(id));
@@ -102,6 +112,7 @@ namespace Thomas.App.Controllers
             return View(chamadoViewModel);
         }
 
+        [Route("excluir-chamado/{id:guid}")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
