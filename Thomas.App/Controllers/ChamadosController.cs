@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Thomas.App.ViewModels;
 using Thomas.Business.Interfaces;
 using Thomas.Business.Models;
+using static Thomas.App.Extensions.CustomAuthorize;
 
 namespace Thomas.App.Controllers
 {
@@ -47,6 +48,7 @@ namespace Thomas.App.Controllers
             return View(chamadoViewModel);
         }
 
+        [ClaimsAuthorize("Chamado", "Adicionar")]
         [Route("novo-chamado")]
         public async Task<IActionResult> Create()
         {
@@ -56,6 +58,7 @@ namespace Thomas.App.Controllers
             return View(chamadoViewModel);
         }
 
+        [ClaimsAuthorize("Chamado", "Adicionar")]
         [Route("novo-chamado")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -70,6 +73,7 @@ namespace Thomas.App.Controllers
             return RedirectToAction("Index");
         }
 
+        [ClaimsAuthorize("Chamado", "Editar")]
         [Route("editar-chamado/{id:guid}")]
         public async Task<IActionResult> Edit(Guid id)
         {
@@ -83,6 +87,7 @@ namespace Thomas.App.Controllers
             return View(chamadoViewModel);
         }
 
+        [ClaimsAuthorize("Chamado", "Editar")]
         [Route("editar-chamado/{id:guid}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -99,6 +104,7 @@ namespace Thomas.App.Controllers
             return RedirectToAction("Index");
         }
 
+        [ClaimsAuthorize("Chamado", "Excluir")]
         [Route("excluir-chamado/{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
@@ -112,6 +118,7 @@ namespace Thomas.App.Controllers
             return View(chamadoViewModel);
         }
 
+        [ClaimsAuthorize("Chamado", "Excluir")]
         [Route("excluir-chamado/{id:guid}")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
