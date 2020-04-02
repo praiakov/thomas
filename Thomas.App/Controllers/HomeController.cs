@@ -1,20 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+﻿using KissLog;
+using Microsoft.AspNetCore.Mvc;
 using Thomas.App.ViewModels;
 
 namespace Thomas.App.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger logger)
         {
             _logger = logger;
         }
 
         public IActionResult Index()
         {
+
             return View();
         }
 

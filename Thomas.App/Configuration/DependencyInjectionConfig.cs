@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using KissLog;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Thomas.Business.Interfaces;
 using Thomas.Business.Interfaces.Services;
 using Thomas.Business.Notifications;
@@ -18,6 +20,12 @@ namespace Thomas.App.Configuration
             services.AddScoped<IFornecedorService, FornecedorService>();
             services.AddScoped<IChamadoService, ChamadoService>();
             services.AddScoped<INotificador, Notificador>();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<ILogger>((context) =>
+            {
+                return Logger.Factory.Get();
+            });
 
             return services;
 

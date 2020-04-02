@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using KissLog.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -48,6 +49,7 @@ namespace Thomas.App
             services.ResolveDependency();
         }
 
+        [System.Obsolete]
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             
@@ -74,6 +76,8 @@ namespace Thomas.App
 
             app.UseGlobalizationConfig();
 
+            app.UseKissLogMiddleware();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -81,6 +85,9 @@ namespace Thomas.App
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+            
+            LogCofig.RegisterLogListeners(Configuration);
+
         }
     }
 }
