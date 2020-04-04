@@ -3,12 +3,13 @@
 
 @{
     ViewData["Title"] = "Detalhes";
+
 }
 
-<h1>@ViewData["Title"]</h1>
-
+<h5>@ViewData["Title"]</h5>
+<hr />
 <div>
-    <h4>Informação somente leitura</h4>
+    <span>Informação somente leitura</span>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -55,7 +56,10 @@
         </dd>
     </dl>
 </div>
-<div>
-    <a class="btn btn-dark" asp-route-id="@Model.Id">Editar</a>
-    <a class="btn btn-info" asp-action="Index">Voltar</a>
+<div class="row">
+    <div class="col-md-8">
+        <a class="btn btn-outline-info" asp-action="Index"><span class="fa fa-arrow-alt-circle-left"></span></a>
+        <a class="btn btn-outline-primary float-right" asp-action="Edit" asp-route-id="@Model.Id"><span class="fa fa-pencil-alt"></span></a>
+    </div>
 </div>
+

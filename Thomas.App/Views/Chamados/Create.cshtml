@@ -4,26 +4,28 @@
     ViewData["Title"] = "Novo Chamado";
 }
 
-<h3 style="margin-top: 50px">@ViewData["Title"]</h3>
-
+<h5>@ViewData["Title"]</h5>
+<hr />
 <div class="row">
     <div class="col-md-8">
         <form asp-action="Create">
             <vc:Summary></vc:Summary>
+            <div class="form-row">
+                <div class="form-group col-md-9">
+                    <label asp-for="FornecedorId" class="control-label"></label>
+                    <select asp-for="FornecedorId" class="form-control" asp-items="@(new SelectList(Model.Fornecedores, "Id", "Nome"))">
+                        <option>
+                        </option>
+                    </select>
+                    <span asp-validation-for="FornecedorId" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="NumeroChamado" class="control-label"></label>
+                    <input asp-for="NumeroChamado" class="form-control" />
+                    <span asp-validation-for="NumeroChamado" class="text-danger"></span>
+                </div>
+            </div>
 
-            <div class="form-group">
-                <label asp-for="FornecedorId" class="control-label"></label>
-                <select asp-for="FornecedorId" class="form-control" asp-items="@(new SelectList(Model.Fornecedores, "Id", "Nome"))">
-                    <option>
-                    </option>
-                </select>
-                <span asp-validation-for="FornecedorId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NumeroChamado" class="control-label"></label>
-                <input asp-for="NumeroChamado" class="form-control" />
-                <span asp-validation-for="NumeroChamado" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <label asp-for="Titulo" class="control-label"></label>
                 <input asp-for="Titulo" class="form-control" />
@@ -33,8 +35,20 @@
                 <label asp-for="TipoStatus" class="control-label"></label><br />
                 <input type="radio" value="1" asp-for="TipoStatus" checked /> Aberto
                 <input type="radio" value="2" asp-for="TipoStatus" /> Fechado
-                <input type="radio" value="2" asp-for="TipoStatus" /> Pausado
-                <input type="radio" value="2" asp-for="TipoStatus" /> Cancelado
+                <input type="radio" value="3" asp-for="TipoStatus" /> Pausado
+                <input type="radio" value="4" asp-for="TipoStatus" /> Cancelado
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label asp-for="DataAbertura" class="control-label"></label>
+                    <input asp-for="DataAbertura" class="form-control datepicker" />
+                    <span asp-validation-for="DataAbertura" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="DataFechamento" class="control-label"></label>
+                    <input asp-for="DataFechamento" class="form-control datepicker" />
+                    <span asp-validation-for="DataFechamento" class="text-danger"></span>
+                </div>
             </div>
             <div class="form-group">
                 <label asp-for="Descricao" class="control-label"></label>
@@ -42,18 +56,8 @@
                 <span asp-validation-for="Descricao" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DataAbertura" class="control-label"></label>
-                <input asp-for="DataAbertura" class="form-control datepicker" />
-                <span asp-validation-for="DataAbertura" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DataFechamento" class="control-label"></label>
-                <input asp-for="DataFechamento" class="form-control datepicker" />
-                <span asp-validation-for="DataFechamento" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Cadastrar" class="btn btn-primary" />
-                <a class="btn btn-info" asp-action="Index">Voltar</a>
+                <a class="btn btn-outline-info" asp-action="Index"><span class="fa fa-arrow-alt-circle-left"></span></a>
+                <input value="Salvar" type="submit" class="btn btn-outline-success float-right" />
             </div>
         </form>
     </div>

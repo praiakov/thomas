@@ -4,8 +4,8 @@
     ViewData["Title"] = "Novo Fornecedor";
 }
 
-<h3 style="margin-top: 50px">@ViewData["Title"]</h3>
-
+<h5>@ViewData["Title"]</h5>
+<hr />
 <div class="row">
     <div class="col-md-8">
         <form asp-action="Create">
@@ -33,8 +33,8 @@
                 </label>
             </div>
             <div class="form-group">
-                <input type="submit" value="Cadastrar" class="btn btn-primary" />
-                <a class="btn btn-info" asp-action="Index">Voltar</a>
+                <a class="btn btn-outline-info" asp-action="Index"><span class="fa fa-arrow-alt-circle-left"></span></a>
+                <input value="Salvar" type="submit" class="btn btn-outline-success float-right" />
             </div>
         </form>
     </div>

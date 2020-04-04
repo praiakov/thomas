@@ -4,11 +4,11 @@
     ViewData["Title"] = "Excluir " + Model.Nome;
 }
 
-<h4 style="padding-top: 50px">@ViewData["Title"] </h4>
-
-<h5>Você tem certeza disso?</h5>
-
+<h5>@ViewData["Title"]</h5>
+<hr />
 <div>
+    <span class="text-danger">Esta ação será permanente!</span>
+    <hr />
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Nome)
@@ -29,10 +29,13 @@
             @Html.DisplayFor(model => model.Ativo)
         </dd>
     </dl>
-
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Excluir" class="btn btn-danger" />
-        <a class="btn btn-info" href="javascript:window.history.back();">Voltar</a>
-    </form>
+</div>
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+            <a class="btn btn-outline-info" asp-action="Index"><span class="fa fa-arrow-alt-circle-left"></span></a>
+            <input type="submit" value="Excluir" class="btn btn-outline-danger float-right" />
+        </form>
+    </div>
 </div>

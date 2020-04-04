@@ -3,30 +3,35 @@
 @{
     ViewData["Title"] = "Detalhe do Fornecedor - " + Model.Nome;
 }
-
+<h5>@ViewData["Title"]</h5>
+<hr />
 <div>
+    <span>Informação somente leitura</span>
+    <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Nome)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Nome)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Contato)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Contato)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Ativo)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Ativo)
         </dd>
     </dl>
 </div>
-<div>
-    <a class="btn btn-warning" action="Edit" asp-route-id="@Model.Id"><span class="fa fa-pencil-alt"></span></a>
-    <a class="btn btn-info" href="javascript:window.history.back();">Voltar</a>
+<div class="row">
+    <div class="col-md-8">
+        <a class="btn btn-outline-info" asp-action="Index"><span class="fa fa-arrow-alt-circle-left"></span></a>
+        <a class="btn btn-outline-primary float-right" asp-action="Edit" asp-route-id="@Model.Id"><span class="fa fa-pencil-alt"></span></a>
+    </div>
 </div>

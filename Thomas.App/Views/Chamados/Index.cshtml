@@ -5,32 +5,29 @@
     ViewData["Title"] = "Lista de Chamados";
 }
 
-<h1>@ViewData["Title"]</h1>
-<hr />
+<nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand">@ViewData["Title"]</a>
+    <p supress-by-claim-name="Chamado" supress-by-claim-value="Adicionar">
+        <a class="btn btn-outline-success" asp-action="Create"><span class="fa fa-plus"></span></a>
+    </p>
+</nav>
 
-<p supress-by-claim-name="Chamado" supress-by-claim-value="Adicionar">
-    <a class="btn btn-info" asp-action="Create">Novo Chamado</a>
-</p>
-
-<table class="table table-hover">
-    <thead class="thead-dark">
+<table class="table table-striped">
+    <thead>
         <tr>
-            <th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.NumeroChamado)
+            </th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.Titulo)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descricao)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DataAbertura)
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.TipoStatus)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.DataFechamento)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TipoStatus)
-            </th>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.Fornecedor)
             </th>
             <th></th>
@@ -41,27 +38,24 @@
         {
             <tr>
                 <td>
+                    @Html.DisplayFor(modelItem => item.NumeroChamado)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Titulo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Descricao)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DataAbertura)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DataFechamento)
                 </td>
                 <td>
                     @this.FormataStatus(item.TipoStatus)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.DataFechamento)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Fornecedor.Nome)
                 </td>
                 <td class="text-right">
-                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id"><span class="fa fa-search"></span></a>
-                    <a class="btn btn-warning" disable-by-claim-name="Chamado" disable-by-claim-value="Editar" asp-action="Edit" asp-route-id="@item.Id"><span class="fa fa-pencil-alt"></span></a>
-                    <a class="btn btn-danger" supress-by-claim-name="Chamado" supress-by-claim-value="Excluir" asp-action="Delete" asp-route-id="@item.Id"><span class="fa fa-trash-alt"></span></a>
+                    <a class="btn btn-outline-dark" asp-action="Details" asp-route-id="@item.Id"><span class="fa fa-search"></span></a>
+                    <a class="btn btn-outline-primary" disable-by-claim-name="Chamado" disable-by-claim-value="Editar" asp-action="Edit" asp-route-id="@item.Id"><span class="fa fa-pencil-alt"></span></a>
+                    <a class="btn btn-outline-danger" disable-by-claim-name="Chamado" disable-by-claim-value="Excluir" asp-action="Delete" asp-route-id="@item.Id"><span class="fa fa-trash-alt"></span></a>
                 </td>
             </tr>
         }
