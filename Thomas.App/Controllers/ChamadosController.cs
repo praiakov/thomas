@@ -43,7 +43,7 @@ namespace Thomas.App.Controllers
         [Route("dados-do-chamado/{id:guid}")]
         public async Task<IActionResult> Details(Guid id)
         {
-            var chamadoViewModel = _mapper.Map<ChamadoViewModel>(await _chamadoRepository.ObterPorId(id));
+            var chamadoViewModel = await ObterChamado(id);
 
             return View(chamadoViewModel);
         }
