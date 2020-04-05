@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Razor;
+using System;
 
 namespace Thomas.App.Extensions
 {
@@ -13,6 +14,14 @@ namespace Thomas.App.Extensions
             if (tipoStatus == 3) return "Pausado";
 
             return "Cancelado";
+        }
+
+        public static string FormataData(this RazorPage page, string data)
+        {
+
+            var dataT = Convert.ToDateTime(data);
+
+            return dataT.ToString("dd/MM/yyyy");
         }
     }
 }
