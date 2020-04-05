@@ -33,8 +33,13 @@ namespace Thomas.App.Controllers
 
         [Route("lista-de-fornecedores")]
         [AllowAnonymous]
-        public async Task<IActionResult> Index()
-         {
+        public async Task<IActionResult> Index(string nome)
+        {
+            if(!String.IsNullOrEmpty(nome))
+                return View(_mapper.Map<IEnumerable<FornecedorViewModel>>(await _fornecedorRepository.Buscar(c => c.Nome.Contains(nome))));
+
+            ViewBag.numeroChamado = nome;
+
             return View(_mapper.Map<IEnumerable<FornecedorViewModel>>(await _fornecedorRepository.ObterTodos()));
         }
 

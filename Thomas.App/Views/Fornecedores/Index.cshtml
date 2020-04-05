@@ -10,7 +10,25 @@
         <a class="btn btn-outline-success" asp-action="Create"><span class="fa fa-plus"></span></a>
     </p>
 </nav>
-
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <p>
+            <button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                <span class="fa fa-filter"></span>
+            </button>
+        </p>
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+                @using (Html.BeginForm("Index", "Fornecedores", FormMethod.Get, new { @class = "form-inline my-2 my-lg-0" }))
+                {
+                    @Html.TextBox("nome", ViewBag.nome as string, new { @class = "form-control mr-sm-2", placeholder = "Nome" })
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
 <table class="table table-striped">
     <thead>
         <tr>

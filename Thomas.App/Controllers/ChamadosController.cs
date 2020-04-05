@@ -35,9 +35,14 @@ namespace Thomas.App.Controllers
 
         [AllowAnonymous]
         [Route("lista-de-chamados")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string numeroChamado)
         {
-            return View(_mapper.Map<IEnumerable<ChamadoViewModel>>(await _chamadoRepository.ObterChamadosFornecedores()));
+            if(!string.IsNullOrEmpty(numeroChamado)) 
+                return View(_mapper.Map<IEnumerable<ChamadoViewModel>>(await _chamadoRepository.Buscar(c => c.NumeroChamado.Contains(numeroChamado))));
+
+            ViewBag.numeroChamado = numeroChamado;
+
+            return View(_mapper.Map<IEnumerable<ChamadoViewModel>>(await _chamadoRepository.ObterTodos()));
         }
 
         [Route("dados-do-chamado/{id:guid}")]
