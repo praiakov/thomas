@@ -30,52 +30,55 @@
         </div>
     </div>
 </div>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th scope="col">
-                @Html.DisplayNameFor(model => model.NumeroChamado)
-            </th>
-            <th scope="col">
-                @Html.DisplayNameFor(model => model.Titulo)
-            </th>
-            <th scope="col">
-                @Html.DisplayNameFor(model => model.TipoStatus)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DataFechamento)
-            </th>
-            <th scope="col">
-                @Html.DisplayNameFor(model => model.Fornecedor)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+<div class="table-responsive">
+    <table class="table table-striped table-sm">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NumeroChamado)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Titulo)
-                </td>
-                <td>
-                    @this.FormataStatus(item.TipoStatus)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DataFechamento)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Fornecedor.Nome)
-                </td>
-                <td class="text-right">
-                    <a class="btn btn-outline-dark" asp-action="Details" asp-route-id="@item.Id"><span class="fa fa-search"></span></a>
-                    <a class="btn btn-outline-primary" disable-by-claim-name="Chamado" disable-by-claim-value="Editar" asp-action="Edit" asp-route-id="@item.Id"><span class="fa fa-pencil-alt"></span></a>
-                    <a class="btn btn-outline-danger" disable-by-claim-name="Chamado" disable-by-claim-value="Excluir" asp-action="Delete" asp-route-id="@item.Id"><span class="fa fa-trash-alt"></span></a>
-                </td>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.NumeroChamado)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.Titulo)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.TipoStatus)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DataFechamento)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.Fornecedor)
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumeroChamado)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Titulo)
+                    </td>
+                    <td>
+                        @this.FormataStatus(item.TipoStatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DataFechamento)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Fornecedor.Nome)
+                    </td>
+                    <td class="text-right">
+                        <a class="btn btn-outline-dark" asp-action="Details" asp-route-id="@item.Id"><span class="fa fa-search"></span></a>
+                        <a class="btn btn-outline-primary" disable-by-claim-name="Chamado" disable-by-claim-value="Editar" asp-action="Edit" asp-route-id="@item.Id"><span class="fa fa-pencil-alt"></span></a>
+                        <a class="btn btn-outline-danger" disable-by-claim-name="Chamado" disable-by-claim-value="Excluir" asp-action="Delete" asp-route-id="@item.Id"><span class="fa fa-trash-alt"></span></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
