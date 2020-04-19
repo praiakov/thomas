@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ReflectionIT.Mvc.Paging;
 using Thomas.App.Configuration;
 using Thomas.Data.Context;
 
@@ -40,6 +41,10 @@ namespace Thomas.App
                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
 
+            services.AddPaging(options => {
+                options.ViewName = "Bootstrap4";
+            });
+
             services.AddAutoMapper(typeof(Startup));
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
@@ -47,6 +52,7 @@ namespace Thomas.App
             services.AddRazorPages();
 
             services.ResolveDependency();
+            
         }
 
         [System.Obsolete]

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ReflectionIT.Mvc.Paging;
 using Thomas.App.ViewModels;
 using Thomas.Business.Interfaces;
 using Thomas.Business.Models;
@@ -35,14 +36,24 @@ namespace Thomas.App.Controllers
 
         [AllowAnonymous]
         [Route("lista-de-chamados")]
-        public async Task<IActionResult> Index(string numeroChamado)
+        public async Task<IActionResult> Index(string numeroChamado, int page = 1)
         {
-            if(!string.IsNullOrEmpty(numeroChamado)) 
-                return View(_mapper.Map<IEnumerable<ChamadoViewModel>>(await _chamadoRepository.Buscar(c => c.NumeroChamado.Contains(numeroChamado))));
+            if (!string.IsNullOrEmpty(numeroChamado))
+            {
+                var chamado = _mapper.Map<IEnumerable<ChamadoViewModel>>(await _chamadoRepository.Buscar(c => c.NumeroChamado.Equals(numeroChamado)));
+                var chamadoViewModel = PagingList.Create(chamado, 1, page);
+
+                return View(chamadoViewModel);
+            }
+
+            var chamados = _mapper.Map<IEnumerable<ChamadoViewModel>>(await _chamadoRepository.ObterChamadosFornecedores());
+            var chamadosViewModel = PagingList.Create(chamados, 10, page);
 
             ViewBag.numeroChamado = numeroChamado;
 
-            return View(_mapper.Map<IEnumerable<ChamadoViewModel>>(await _chamadoRepository.ObterChamadosFornecedores()));
+            chamadosViewModel.Action = "lista-de-chamados";
+
+            return View(chamadosViewModel);
         }
 
         [Route("dados-do-chamado/{id:guid}")]

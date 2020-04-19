@@ -1,5 +1,5 @@
-﻿@using Thomas.App.Extensions;
-@model IEnumerable<Thomas.App.ViewModels.ChamadoViewModel>
+﻿@model ReflectionIT.Mvc.Paging.PagingList<Thomas.App.ViewModels.ChamadoViewModel>
+@using Thomas.App.Extensions;
 
 @{
     ViewData["Title"] = "Lista de Chamados";
@@ -11,7 +11,7 @@
         <a class="btn btn-outline-success" asp-action="Create"><span class="fa fa-plus"></span></a>
     </p>
 </nav>
-<br/>
+<br />
 <div class="row">
     <div class="col-md-12">
         <p>
@@ -35,19 +35,19 @@
         <thead>
             <tr>
                 <th scope="col">
-                    @Html.DisplayNameFor(model => model.NumeroChamado)
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().NumeroChamado)
                 </th>
                 <th scope="col">
-                    @Html.DisplayNameFor(model => model.Titulo)
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Titulo)
                 </th>
                 <th scope="col">
-                    @Html.DisplayNameFor(model => model.TipoStatus)
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().TipoStatus)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.DataFechamento)
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().DataFechamento)
                 </th>
                 <th scope="col">
-                    @Html.DisplayNameFor(model => model.Fornecedor)
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Fornecedor)
                 </th>
                 <th></th>
             </tr>
@@ -80,5 +80,8 @@
             }
         </tbody>
     </table>
+    <nav aria-label="Chamados navigation example">
+        @await Html.PartialAsync("/Views/Shared/Components/Pager/_SmallPager.cshtml", this.Model)
+    </nav>
 </div>
 
