@@ -42,7 +42,7 @@ namespace Thomas.App.Controllers
 
             ViewBag.numeroChamado = numeroChamado;
 
-            return View(_mapper.Map<IEnumerable<ChamadoViewModel>>(await _chamadoRepository.ObterTodos()));
+            return View(_mapper.Map<IEnumerable<ChamadoViewModel>>(await _chamadoRepository.ObterChamadosFornecedores()));
         }
 
         [Route("dados-do-chamado/{id:guid}")]
