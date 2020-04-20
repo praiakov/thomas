@@ -25,7 +25,7 @@ namespace Thomas.App
                 .AddJsonFile($"appsettings.{hostEnvironment.EnvironmentName}.json", true, true)
                 .AddEnvironmentVariables();
 
-            if (hostEnvironment.IsDevelopment())
+            if (hostEnvironment.IsProduction())
             {
                 builder.AddUserSecrets<Startup>();
             }
@@ -55,7 +55,6 @@ namespace Thomas.App
             
         }
 
-        [System.Obsolete]
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             

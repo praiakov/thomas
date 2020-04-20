@@ -6,7 +6,6 @@ namespace Thomas.App.Configuration
 {
     public static class LogCofig
     {
-        [System.Obsolete]
         public static void RegisterLogListeners(IConfiguration configuration)
         {
             KissLogConfiguration.Listeners.Add(new KissLogApiListener(
