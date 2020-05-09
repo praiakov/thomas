@@ -15,3 +15,9 @@ $(document).ready(function () {
         off: 'Não'
     });
 });
+
+$(document).ready(function () {
+    $("#menu-toggle").click(function () {
+        $("#wrapper").toggleClass("toggled");
+    });
+});

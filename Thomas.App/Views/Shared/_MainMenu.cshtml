@@ -1,0 +1,17 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <div class="bg-light border-right" id="sidebar-wrapper">
+        <div class="list-group list-group-flush">
+            <a href="@Url.Action()" class="list-group-item list-group-item-action bg-light"><span class="fa fa-tools" /> Administração</a>
+            <a href="@Url.Action("Index","Fornecedores")" class="list-group-item list-group-item-action bg-light"><span class="fa fa-users" /> Fornecedores</a>
+            <a href="@Url.Action("Index", "Chamados")" class="list-group-item list-group-item-action bg-light"><span class="fa fa-phone" /> Chamados</a>
+        </div>
+
+    </div>
+}
