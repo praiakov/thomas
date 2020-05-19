@@ -1,0 +1,115 @@
+﻿<link href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+
+<br />
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <canvas id="lineChart" width="500" height="300"></canvas>
+        </div>
+    </div>
+</div>
+
+<script>
+    function LineChart() {
+        var ctx = document.getElementById("lineChart").getContext("2d");
+
+        const color = {
+            red: {
+                background: 'rgba(255, 99, 132, 0.2)',
+                border: 'rgba(255, 99, 132, 1)',
+            },
+            green: {
+                background: 'rgba(75, 192, 192, 0.2)',
+                border: 'rgba(75, 192, 192, 1)',
+            },
+            gray: {
+                background: 'rgba(153, 102, 255, 0.2)',
+                border: 'rgba(153, 102, 255, 1)',
+            },
+            yellow: {
+                background: 'rgba(255, 159, 64, 0.2)',
+                border: 'rgba(255, 159, 64, 1)',
+            }
+        }
+
+        const barPerc = 0.5;
+
+        const aberto = [26, 36, 42, 38, 40, 30, 12];
+        const fechado = [34, 44, 33, 24, 25, 28, 25];
+        const cancelado = [16, 13, 25, 33, 40, 33, 45];
+        const pausado = [7, 9, 10, 9, 18, 19, 20];
+        const xData = ["Jan", "Fev", "Mar", "Abr", "Maio", "Jun", "Jul"];
+
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: xData,
+                datasets: [{
+                    label: "Aberto",
+                    barPercentage: barPerc,
+                    backgroundColor: color.gray.background,
+                    borderColor: color.gray.border,
+                    borderWidth: 1,
+                    data: aberto,
+
+                }, {
+                    label: "Fechado",
+                    barPercentage: barPerc,
+                    backgroundColor: color.green.background,
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1,
+                    data: fechado,
+                }, {
+                    label: "Pausado",
+                    barPercentage: barPerc,
+                    backgroundColor: color.yellow.background,
+                    borderColor: color.yellow.border,
+                    borderWidth: 1,
+                    data: pausado,
+                }, {
+                    label: "Cancelado",
+                    barPercentage: barPerc,
+                    backgroundColor: color.red.background,
+                    borderColor: color.red.border,
+                    borderWidth: 1,
+                    data: cancelado,
+                }]
+            },
+            options: {
+                responsive: true,
+                events: [],
+                scales: {
+                    ticks: {
+                        beginAtZero: true,
+                        display: false
+                    }
+                },
+                animation: {
+                    duration: 1,
+                    onComplete: function () {
+                        var chartInstance = this.chart,
+                            ctx = chartInstance.ctx;
+
+                        ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'bottom';
+
+                        this.data.datasets.forEach(function (dataset, i) {
+                            var meta = chartInstance.controller.getDatasetMeta(i);
+                            meta.data.forEach(function (bar, index) {
+                                if (dataset.data[index] > 0) {
+                                    var data = dataset.data[index];
+                                    ctx.fillText(data, bar._model.x, bar._model.y);
+                                }
+                            });
+                        });
+                    }
+                }
+            }
+        });
+    }
+</script>
+
+

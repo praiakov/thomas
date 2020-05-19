@@ -21,3 +21,7 @@ $(document).ready(function () {
         $("#wrapper").toggleClass("toggled");
     });
 });
+
+$(document).ready(function () {
+    LineChart();
+});
