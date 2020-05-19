@@ -1,7 +1,8 @@
 # Thomas
 :tophat: CoreMvc application for controlling providers' callings
 
-![Calls](https://github.com/praiakov/Thomas/blob/master/calls.PNG)
+
+![1919](https://github.com/praiakov/Thomas/blob/master/shelby.png)
 
 A complete tool for organizing your company's support. It controls external calls and guarantees a more efficient in assistance to your users
 
