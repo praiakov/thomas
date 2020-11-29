@@ -13,6 +13,19 @@
 
 <script>
     function LineChart() {
+        $.ajax({
+            url: '/Home/ReportChamados',
+            type: 'GET',
+            success: function (data) {
+                Dashboard(data);
+            },
+            error: function (error) {
+                alert(error);
+            }
+        });
+    }
+
+    function Dashboard(data) {
         var ctx = document.getElementById("lineChart").getContext("2d");
 
         const color = {
@@ -36,11 +49,11 @@
 
         const barPerc = 0.5;
 
-        const aberto = [26, 36, 42, 38, 40, 30, 12];
-        const fechado = [34, 44, 33, 24, 25, 28, 25];
-        const cancelado = [16, 13, 25, 33, 40, 33, 45];
-        const pausado = [7, 9, 10, 9, 18, 19, 20];
-        const xData = ["Jan", "Fev", "Mar", "Abr", "Maio", "Jun", "Jul"];
+        const aberto = data.aberto;
+        const fechado = data.fechado;
+        const cancelado = data.cancelado;
+        const pausado = data.pausado;
+        const xData = data.mes;
 
         const myChart = new Chart(ctx, {
             type: 'bar',

@@ -1,6 +1,12 @@
 ﻿using KissLog;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using Thomas.App.ViewModels;
+using Thomas.Business.Interfaces;
+using Thomas.Business.Models;
 
 namespace Thomas.App.Controllers
 {
@@ -8,9 +14,12 @@ namespace Thomas.App.Controllers
     {
         private readonly ILogger _logger;
 
-        public HomeController(ILogger logger)
+        private readonly IChamadoRepository _chamadoRepository;
+
+        public HomeController(ILogger logger, IChamadoRepository chamadoRepository)
         {
             _logger = logger;
+            _chamadoRepository = chamadoRepository;
         }
 
         public IActionResult Index()
@@ -22,6 +31,39 @@ namespace Thomas.App.Controllers
         public IActionResult Report()
         {
             return View();
+        }
+
+        public JsonResult ReportChamados()
+        {
+
+            var query = _chamadoRepository.ObterTodos().Result
+                .Where(x => x.DataAbertura.Year == DateTime.Now.Year);
+
+            var mesMin = query.Min(x => x.DataAbertura.Month);
+
+            var mesCount = query.Select(x => x.DataAbertura.Month)
+                .GroupBy(x => x)
+                .Count();
+
+            var mesesIntervalo = GetMeses(mesMin, mesCount);
+
+            var chamadosAberto = GetChamadosAberto(mesesIntervalo);
+            var chamadosFechado = GetChamadosFechado(mesesIntervalo);
+            var chamadosPausado = GetChamadosPausado(mesesIntervalo);
+            var chamadosCancelado = GetChamadosCancelado(mesesIntervalo);
+
+            var meses = GetNomeMeses(mesesIntervalo);
+
+            var jsonObj = new Dashboard()
+            {
+                Aberto = chamadosAberto.ToArray(),
+                Fechado = chamadosFechado.ToArray(),
+                Pausado = chamadosPausado.ToArray(),
+                Cancelado = chamadosCancelado.ToArray(),
+                Mes = meses.ToArray()
+            }; 
+
+            return Json(jsonObj);
         }
 
         [Route("erro/{id:length(3,3)}")]
@@ -54,5 +96,82 @@ namespace Thomas.App.Controllers
 
             return View("Error", modelErro);
         }
+
+        #region Metodos privados
+        private List<int> GetMeses(int start, int count)
+        {
+            return Enumerable.Range(start, count)
+                .ToList();
+        }
+
+        private List<string> GetNomeMeses(List<int> meses)
+        {
+            var mesesNames = meses
+               .Select(x => CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(x))
+               .ToList();
+
+            return mesesNames;
+        }
+
+        private List<int> GetChamadosAberto(List<int> meses)
+        {
+            List<int> aberto = new List<int>();
+
+            var query = _chamadoRepository.ObterTodos().Result;
+
+            foreach (var m in meses.OrderBy(x => x))
+            {
+                var total = query.Where(x => x.DataAbertura.Month == m && x.TipoStatus == TipoStatus.Aberto).Count();
+                aberto.Add(total);
+            }
+                     
+            return aberto;
+        }
+
+        private List<int> GetChamadosFechado(List<int> meses)
+        {
+            List<int> fechado = new List<int>();
+
+            var query = _chamadoRepository.ObterTodos().Result;
+
+            foreach (var m in meses.OrderBy(x => x))
+            {
+                var total = query.Where(x => x.DataAbertura.Month == m && x.TipoStatus == TipoStatus.Fechado).Count();
+                fechado.Add(total);
+            }
+
+            return fechado;
+        }
+
+        private List<int> GetChamadosPausado(List<int> meses)
+        {
+            List<int> pausado = new List<int>();
+
+            var query = _chamadoRepository.ObterTodos().Result;
+
+            foreach (var m in meses.OrderBy(x => x))
+            {
+                var total = query.Where(x => x.DataAbertura.Month == m && x.TipoStatus == TipoStatus.Pausado).Count();
+                pausado.Add(total);
+            }
+
+            return pausado;
+        }
+
+        private List<int> GetChamadosCancelado(List<int> meses)
+        {
+            List<int> cancelado = new List<int>();
+
+            var query = _chamadoRepository.ObterTodos().Result;
+
+            foreach (var m in meses.OrderBy(x => x))
+            {
+                var total = query.Where(x => x.DataAbertura.Month == m && x.TipoStatus == TipoStatus.Cancelado).Count();
+                cancelado.Add(total);
+            }
+
+            return cancelado;
+        }
+        #endregion
     }
 }
