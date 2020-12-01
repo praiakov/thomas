@@ -57,9 +57,13 @@ namespace Thomas.App.Controllers
             var jsonObj = new Dashboard()
             {
                 Aberto = chamadosAberto.ToArray(),
+                AbertoCount = chamadosAberto.Sum(),
                 Fechado = chamadosFechado.ToArray(),
+                FechadoCount = chamadosFechado.Sum(),
                 Pausado = chamadosPausado.ToArray(),
+                PausadoCount = chamadosPausado.Sum(),
                 Cancelado = chamadosCancelado.ToArray(),
+                CanceladoCount = chamadosCancelado.Sum(),
                 Mes = meses.ToArray()
             }; 
 
