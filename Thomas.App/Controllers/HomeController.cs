@@ -39,6 +39,9 @@ namespace Thomas.App.Controllers
             var query = _chamadoRepository.ObterTodos().Result
                 .Where(x => x.DataAbertura.Year == DateTime.Now.Year);
 
+            if (!query.Any())
+                return Json(new Dashboard());
+
             var mesMin = query.Min(x => x.DataAbertura.Month);
 
             var mesCount = query.Select(x => x.DataAbertura.Month)
@@ -65,7 +68,7 @@ namespace Thomas.App.Controllers
                 Cancelado = chamadosCancelado.ToArray(),
                 CanceladoCount = chamadosCancelado.Sum(),
                 Mes = meses.ToArray()
-            }; 
+            };
 
             return Json(jsonObj);
         }
@@ -128,7 +131,7 @@ namespace Thomas.App.Controllers
                 var total = query.Where(x => x.DataAbertura.Month == m && x.TipoStatus == TipoStatus.Aberto).Count();
                 aberto.Add(total);
             }
-                     
+
             return aberto;
         }
 
